@@ -1,0 +1,37 @@
+CROP-CALM PROJECT: HARDWARE SHOPPING LIST
+=========================================
+
+Since you already have the NodeMCU, sensors (HC-SR04/PIR), LED, Buzzer, Piezo, 4500mAh battery, TP4056, XL6009E1, and Raspberry Pi, you only need to buy these cheap electronic components to finish the circuit:
+
+1. NPN TRANSISTORS
+   - Model: BC547 or 2N2222
+   - Quantity: 5 to 10
+   - Purpose: Acts as an amplifier driver to make the 40kHz Piezo disc actually loud.
+
+2. RESISTORS (220 OHM)
+   - Value: 220Ω
+   - Quantity: 5
+   - Purpose: Protects your LEDs from burning out over time.
+
+3. RESISTORS (1k OHM)
+   - Value: 1kΩ
+   - Quantity: 5
+   - Purpose: Protects the NPN transistor base from pulling too much current from the ESP8266.
+
+4. FLYBACK DIODES
+   - Model: 1N4148
+   - Quantity: 5
+   - Purpose: Protects your ESP8266 board from voltage spikes caused by the Piezo vibrating.
+
+5. (OPTIONAL) MICROWAVE RADAR
+   - Model: RCWL-0516
+   - Quantity: 1
+   - Purpose: Active motion detection (upgrades the PIR sensor because it has no blind spots).
+
+6. MASTER TOGGLE SWITCH
+   - Model: Basic SPST Mini Toggle Switch or Rocker Switch
+   - Quantity: 1
+   - Purpose: Main power ON/OFF switch for the edge node to save battery during transport.
+
+
+

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Outfit:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Rozha+One&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-heading: 'Alfa Slab One', cursive;
+  --font-subheading: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+
+  /* Dark Theme Default */
+  --color-neo-cream: #F4E7D5;
+  --color-neo-cream-rgb: 244, 231, 213;
+  --color-neo-warm-white: #FEF9F2;
+  --color-neo-black: #101010;
+  --color-neo-black-rgb: 16, 16, 16;
+  --color-neo-dark: #010101;
+  --color-neo-surface: #111111;
+  --color-neo-surface-2: #1a1a1a;
+  --color-neo-green-dark: #157A26;
+  --color-neo-green-light: #E0F5DC;
+  
+  --color-neo-border: rgba(244, 231, 213, 0.15);
+  --color-neo-border-faint: rgba(244, 231, 213, 0.06);
+
+  --color-grid-dots: rgba(244, 231, 213, 0.06);
+  --color-input-bg: #010101;
+  --color-placeholder: rgba(244, 231, 213, 0.25);
+  --color-table-1: #0d0d0d;
+  --color-table-2: #111111;
+}
+
+.light {
+  /* Light Theme */
+  --color-neo-cream: #101010; 
+  --color-neo-cream-rgb: 16, 16, 16;
+  --color-neo-warm-white: #000000;
+  --color-neo-black: #F4E7D5;
+  --color-neo-black-rgb: 244, 231, 213;
+  --color-neo-dark: #FEF9F2;
+  --color-neo-surface: #f8efe3;
+  --color-neo-surface-2: #f0e3ce;
+  --color-neo-green-dark: #E0F5DC;
+  --color-neo-green-light: #157A26;
+
+  --color-neo-border: rgba(16, 16, 16, 0.35);
+  --color-neo-border-faint: rgba(16, 16, 16, 0.15);
+
+  --color-grid-dots: rgba(16, 16, 16, 0.1);
+  --color-input-bg: #FEF9F2;
+  --color-placeholder: rgba(16, 16, 16, 0.25);
+  --color-table-1: #E0D0B0;
+  --color-table-2: #f8efe3;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-neo-dark);
+  color: var(--color-neo-cream);
+  background-image:
+    linear-gradient(to right, var(--color-grid-dots) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid-dots) 1px, transparent 1px);
+  background-size: 30px 30px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.neo-card {
+  background-color: var(--color-neo-surface);
+  background-image: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.animate-fadeIn  { animation: fadeIn  0.2s ease-out; }
+.animate-slideUp { animation: slideUp 0.3s ease-out; }
+
+/* Force remove focus outlines from all Recharts containers and elements */
+.recharts-wrapper, .recharts-wrapper *, .recharts-responsive-container, .recharts-responsive-container *, svg, svg * {
+  outline: none !important;
+}
+
+/* Custom dark popup for Leaflet maps */
+.custom-dark-popup .leaflet-popup-content-wrapper,
+.custom-dark-popup .leaflet-popup-tip {
+  background: var(--color-neo-surface);
+  color: var(--color-neo-cream);
+  border: 1px solid var(--color-neo-border);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8), 0 8px 10px -6px rgba(0, 0, 0, 0.8);
+}
+.custom-dark-popup .leaflet-popup-content {
+  margin: 12px;
+}
