@@ -25,6 +25,7 @@ const STEPS = ['Personal Info', 'Avatar', 'Location', 'Animal Sightings', 'Your 
 export default function Onboarding() {
   const [activeStep, setActiveStep] = useState(1);
   const [saving, setSaving] = useState(false);
+  const [validating, setValidating] = useState(false);
   const [gpsLoading, setGpsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -173,6 +174,34 @@ export default function Onboarding() {
       setError(errorMsg);
       throw new Error(errorMsg);
     }
+
+    if (step === 3) {
+      setValidating(true);
+      setError(null);
+      try {
+        const query = encodeURIComponent(`${form.village}, ${form.state}, India`);
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1`, {
+          headers: { 'Accept-Language': 'en' }
+        });
+        
+        if (res.ok) {
+          const data = await res.json();
+          if (data.length === 0) {
+            const msg = `We couldn't verify "${form.village}" as being in ${form.state}. Please check your spelling or use the GPS auto-fill.`;
+            setError(msg);
+            throw new Error(msg);
+          }
+        }
+      } catch (e) {
+        if (e.message.includes("couldn't verify")) {
+          setValidating(false);
+          throw e; 
+        }
+        // Allow fallback if API fails due to network
+      }
+      setValidating(false);
+    }
+    
     setError(null);
   };
 
@@ -197,8 +226,8 @@ export default function Onboarding() {
           onStepSubmit={handleStepSubmit}
           onFinalStepCompleted={handleFinish}
           backButtonText="Back"
-          nextButtonText={activeStep === 5 ? (saving ? 'Setting Up Farm...' : 'Launch Dashboard') : 'Next'}
-          nextButtonProps={{ disabled: saving }}
+          nextButtonText={activeStep === 5 ? (saving ? 'Setting Up Farm...' : 'Launch Dashboard') : (validating ? 'Validating...' : 'Next')}
+          nextButtonProps={{ disabled: saving || validating }}
           stepCircleContainerClassName="border-2 border-neo-cream shadow-[8px_8px_0px_var(--color-neo-cream)] animate-fadeIn w-full max-w-full"
         >
           {/* Step 1: Personal Info */}
