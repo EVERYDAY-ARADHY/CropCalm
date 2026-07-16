@@ -68,8 +68,8 @@ const RingBackground = () => {
         const { c, r, dist } = cell;
         
         // Outward expanding ripple math
-        // Multiply dist to get more rings, multiply time for speed
-        const wave = Math.sin(dist * 25 - time * 1.5);
+        // Multiply dist to get more rings (lower number = further apart), multiply time for speed
+        const wave = Math.sin(dist * 12 - time * 1.5);
         
         // Only show the positive peaks of the sine wave to make distinct rings
         // Scale it down so it's subtle (max opacity 0.3)
