@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { provisionDevices, buildThreatProfile } from '../lib/deviceSetup';
 import Stepper, { Step } from '../components/Stepper';
 import AvatarPicker from '../components/AvatarPicker';
+import OnboardingBackground from '../components/OnboardingBackground';
 
 const ANIMALS = [
   'Wild Boar', 'Nilgai', 'Monkey', 'Elephant', 'Leopard', 'Deer',
@@ -181,8 +182,9 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen text-neo-cream font-body flex flex-col items-center p-6 bg-transparent">
-      <div className="w-full max-w-xl mt-4">
+    <div className="min-h-screen text-neo-cream font-body flex flex-col items-center p-6 bg-transparent relative">
+      <OnboardingBackground step={activeStep} isSaving={saving} />
+      <div className="w-full max-w-xl mt-4 relative z-10">
         {error && (
           <div className="border-2 border-red-500/40 bg-red-500/10 p-4 mb-4 rounded-xl flex items-center justify-center animate-fadeIn">
             <p className="font-subheading text-xs uppercase tracking-widest text-red-400">{error}</p>
