@@ -262,7 +262,7 @@ const LanguageTab = () => {
         {t('currentLanguage')}: {languageItems.find(l => l.id === lang)?.text.split('· ')[1] || 'English'}
       </p>
       
-      <div className="flex-1 min-h-[500px] relative rounded-2xl overflow-hidden border-2 border-neo-cream/20">
+      <div className="flex-1 min-h-[500px] relative -ml-2 -mr-4 md:-ml-16 md:-mr-8">
         <FlowingMenu 
           items={languageItems}
           bgColor="#121212"

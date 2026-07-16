@@ -18,7 +18,7 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-  border-top: 1px solid;
+  border-top: 4px solid;
 }
 
 .menu__item:first-child {
