@@ -24,6 +24,7 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
     
     const cells = new Map();
     let time = 0;
+    let currentSpread = 0; // Tracks the organic spread of the pixels
 
     const resize = () => {
       width = window.innerWidth;
@@ -44,17 +45,19 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
       for (let c = 0; c < cols; c++) {
         for (let r = 0; r < rows; r++) {
           const key = `${c},${r}`;
-          // Diagonally left-to-right top-to-bottom
+          // Diagonally left-to-right top-to-bottom (0 to 2)
           const nx = c / cols;
           const ny = r / rows;
           const pos = nx + ny; 
           
-          let sliceIndex = Math.floor((pos / 2.0) * 5);
-          if (sliceIndex > 4) sliceIndex = 4;
+          // Create an organic threshold for this cell
+          // base goes up to 4.5. noise is between -0.5 and 0.5. Max threshold is 5.0.
+          const noise = (Math.sin(c * 0.5) + Math.cos(r * 0.5)) * 0.5;
+          const threshold = pos * 2.25 + noise;
 
           cells.set(key, {
             c, r,
-            sliceIndex,
+            threshold,
             currentOpacity: 0,
             delayOffset: Math.random() * Math.PI * 2, 
           });
@@ -71,8 +74,11 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
       const rColor = 21, gColor = 122, bColor = 38;
       time += 0.03;
 
+      // Smoothly advance the spread towards the current step
+      currentSpread += (stepRef.current - currentSpread) * 0.05;
+
       for (const [key, cell] of cells.entries()) {
-        const { c, r, sliceIndex, delayOffset } = cell;
+        const { c, r, threshold, delayOffset } = cell;
         
         let targetOpacity = 0;
         
@@ -80,7 +86,8 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
           const wave = (Math.sin(c * 0.15 + time) + Math.cos(r * 0.15 + time) + 2) / 4; 
           targetOpacity = wave * 0.7; // Much brighter loading wave
         } else {
-          if (stepRef.current - 1 >= sliceIndex) {
+          // Virus spread logic: turns on if the spread has reached this cell's organic threshold
+          if (currentSpread >= threshold) {
             targetOpacity = 0.1 + Math.abs(Math.sin(time * 0.5 + delayOffset)) * 0.45; // Max opacity ~0.55
           } else {
             targetOpacity = 0;
