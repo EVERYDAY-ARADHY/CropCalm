@@ -1,6 +1,7 @@
 .av-card {
   width: 100%;
   max-width: 380px;
+  margin: 0 auto;
   background: var(--color-neo-surface);
   border: 2px solid rgba(244,231,213,0.2);
   border-radius: 24px;
