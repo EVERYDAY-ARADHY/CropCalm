@@ -178,12 +178,26 @@ export function DefaultRightPanel({ devices, profile }) {
     >
 
       {/* ── Farmer header row ─────────────────────────── */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, padding: '0 4px', marginBottom: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexShrink: 0, padding: '0 4px', marginBottom: '8px' }}>
         <div>
           <p className="font-subheading text-xs uppercase tracking-widest text-neo-cream/40 mb-1">Farmer</p>
           <p className="font-heading text-4xl uppercase leading-none" style={{ color: 'var(--color-neo-cream)' }}>
             {profile?.name || 'DEMO'}
           </p>
+        </div>
+        <div style={{ display: 'flex', gap: '24px', textAlign: 'right' }}>
+           <div>
+              <p className="font-subheading text-[10px] uppercase tracking-widest text-neo-cream/40 mb-1">Location</p>
+              <p className="font-heading text-xl uppercase leading-none" style={{ color: 'var(--color-neo-cream)' }}>
+                {profile ? `${profile.village}, ${profile.state}` : 'DEMO MODE'}
+              </p>
+           </div>
+           <div>
+              <p className="font-subheading text-[10px] uppercase tracking-widest text-neo-cream/40 mb-1">{t('activeNodes')}</p>
+              <p className="font-heading text-xl uppercase leading-none" style={{ color: 'var(--color-neo-cream)' }}>
+                {onlineNodes} / 5
+              </p>
+           </div>
         </div>
       </div>
 

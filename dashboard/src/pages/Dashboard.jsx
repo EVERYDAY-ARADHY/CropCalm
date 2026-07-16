@@ -80,12 +80,6 @@ export default function Dashboard() {
   return (
     <div className="flex-1 flex flex-col" style={{ minHeight: 0, overflow: 'hidden' }}>
 
-      {/* ── Stat bar ──────────────────────────────────────────────── */}
-      <div className="flex gap-6 px-4 pt-3 pb-2 flex-shrink-0 flex-wrap">
-        <StatChip label="Location"     value={profile ? `${profile.village}, ${profile.state}` : 'DEMO MODE'} />
-        <StatChip label={t('activeNodes')} value={`${onlineCount} / 5`} />
-      </div>
-
       {/* ── Body: radar + right panel side by side ────────────────── */}
       <div className="flex flex-1 min-h-0 overflow-hidden">
 
@@ -133,15 +127,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function StatChip({ label, value, color }) {
-  return (
-    <div className="bg-transparent px-2 py-1">
-      <p className="font-subheading text-[11px] uppercase tracking-widest text-neo-cream/40 mb-1">{label}</p>
-      <p className="font-heading text-2xl uppercase leading-none" style={{ color: color || 'var(--color-neo-cream)' }}>{value}</p>
     </div>
   );
 }
