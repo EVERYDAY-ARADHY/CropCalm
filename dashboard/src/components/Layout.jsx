@@ -6,7 +6,7 @@ import { logout } from '../lib/auth';
 import { supabase } from '../lib/supabase';
 import ProfileDropdown from './ProfileDropdown';
 import MorphicNavbar from './MorphicNavbar';
-
+import AnimatedGrid from './AnimatedGrid';
 
 const Layout = () => {
   const { t, language, changeLanguage } = useLanguage();
@@ -59,7 +59,8 @@ const Layout = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col font-body text-neo-cream">
+    <div className="min-h-screen flex flex-col font-body text-neo-cream relative z-10">
+      <AnimatedGrid />
 
       {/* ── Top Navbar ─────────────────────────────────────────────────── */}
       <header

@@ -6,6 +6,57 @@ import { useLanguage } from '../context/LanguageContext';
 import { useOutletContext } from 'react-router-dom';
 import FlowingMenu from '../components/FlowingMenu';
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import CardSwap, { Card } from '../components/CardSwap';
+import { Phone, Mail } from 'lucide-react';
+
+const InstagramIcon = ({ className, strokeWidth = 2 }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
+
+const LinkedinIcon = ({ className, strokeWidth = 2 }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+const GithubIcon = ({ className, strokeWidth = 2 }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+  </svg>
+);
 
 const COUNTRY_CODES = [
   { code: '+1', label: 'US/CA (+1)' },
@@ -92,12 +143,26 @@ const ProfileTab = ({ profile, setProfile }) => {
     const fullPhone = phone ? `${phoneCode} ${cleanPhone}` : '';
 
     setSaving(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    await supabase.from('profiles').update({ name, phone: fullPhone, email, avatar_id: avatar }).eq('id', user.id);
-    setProfile(p => ({ ...p, name, phone: fullPhone, email, avatar_id: avatar }));
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      const { error: updateError } = await supabase.from('profiles').update({ name, phone: fullPhone, email, avatar_id: avatar }).eq('id', user.id);
+      
+      if (updateError) {
+        console.error('Update failed:', updateError);
+        setError('Failed to save');
+        setSaving(false);
+        return;
+      }
+
+      setProfile(p => ({ ...p, name, phone: fullPhone, email, avatar_id: avatar }));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      console.error(err);
+      setError('An unexpected error occurred.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -129,6 +194,7 @@ const ProfileTab = ({ profile, setProfile }) => {
             <label className="block font-subheading text-xs uppercase tracking-widest text-neo-cream/70 mb-2">
               {t('phoneNumber')}
             </label>
+            {error && <p className="text-red-400 text-xs mb-2">{error}</p>}
             <div className="flex gap-2">
               <select
                 value={phoneCode}
@@ -327,35 +393,100 @@ const StatisticsTab = () => (
   </div>
 );
 
-const ContactTab = () => (
-  <div className="max-w-xl animate-fadeIn mt-4">
-    <div className="space-y-4">
-      <div className="p-6 bg-neo-surface border border-neo-border rounded-xl flex items-center justify-between group hover:border-neo-cream/40 transition-colors">
-        <div>
-          <h3 className="font-heading text-xl uppercase">24/7 Helpline</h3>
-          <p className="font-subheading text-xs uppercase tracking-widest text-neo-cream/50 mt-1">+91 8588819662</p>
-        </div>
-        <a href="tel:+918588819662" className="px-4 py-2 border border-neo-cream text-neo-cream rounded-full font-subheading text-xs uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors">Call Now</a>
-      </div>
-      
-      <div className="p-6 bg-neo-surface border border-neo-border rounded-xl flex items-center justify-between group hover:border-neo-cream/40 transition-colors">
-        <div>
-          <h3 className="font-heading text-xl uppercase">Instagram</h3>
-          <p className="font-subheading text-xs uppercase tracking-widest text-neo-cream/50 mt-1">@tired_kurkure</p>
-        </div>
-        <a href="https://instagram.com/tired_kurkure" target="_blank" rel="noreferrer" className="px-4 py-2 border border-neo-cream text-neo-cream rounded-full font-subheading text-xs uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors">Follow</a>
-      </div>
+const ContactTab = () => {
+  const [dims, setDims] = React.useState({ w: 800, h: 160 });
 
-      <div className="p-6 bg-neo-surface border border-neo-border rounded-xl flex items-center justify-between group hover:border-neo-cream/40 transition-colors">
-        <div>
-          <h3 className="font-heading text-xl uppercase">Email Support</h3>
-          <p className="font-subheading text-xs uppercase tracking-widest text-neo-cream/50 mt-1">krishnaxaradhy@gmail.com</p>
+  React.useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      setDims({
+        w: w < 800 ? w - 40 : 800,
+        h: w < 800 ? 120 : 160
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('card-swap', { detail: { activeIndex: 0 } }));
+    }, 300);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <div className="animate-fadeIn mt-4 h-[calc(100vh-200px)] w-full relative pointer-events-none">
+      <div className="absolute inset-0 md:inset-auto md:bottom-0 md:right-[-80px] md:transform md:translate-x-[10%] md:translate-y-[20%] md:scale-110 md:origin-bottom-right flex items-center justify-center md:block">
+        <CardSwap
+          width={dims.w}
+          height={dims.h}
+          cardDistance={70}
+          verticalDistance={75}
+          delay={0}
+          pauseOnHover={false}
+        >
+      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+        <div className="flex items-center gap-6">
+          <Phone className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
+          <div>
+            <h3 className="font-heading text-4xl uppercase">24/7 Helpline</h3>
+            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">+91 8588819662</p>
+          </div>
         </div>
-        <a href="mailto:krishnaxaradhy@gmail.com" className="px-4 py-2 border border-neo-cream text-neo-cream rounded-full font-subheading text-xs uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors">Send Email</a>
+        <a href="tel:+918588819662" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Call Now</a>
+      </Card>
+      
+      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+        <div className="flex items-center gap-6">
+          <InstagramIcon className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
+          <div>
+            <h3 className="font-heading text-4xl uppercase">Instagram</h3>
+            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">@tired_kurkure</p>
+          </div>
+        </div>
+        <a href="https://instagram.com/tired_kurkure" target="_blank" rel="noreferrer" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Follow</a>
+      </Card>
+
+      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+        <div className="flex items-center gap-6">
+          <Mail className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
+          <div>
+            <h3 className="font-heading text-4xl uppercase">Email Support</h3>
+            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">krishnaxaradhy@gmail.com</p>
+          </div>
+        </div>
+        <a href="mailto:krishnaxaradhy@gmail.com" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Send Email</a>
+      </Card>
+
+      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+        <div className="flex items-center gap-6">
+          <LinkedinIcon className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
+          <div>
+            <h3 className="font-heading text-4xl uppercase">LinkedIn</h3>
+            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">Aradhy Shukla</p>
+          </div>
+        </div>
+        <a href="https://www.linkedin.com/in/aradhy-shukla-81b7b9374" target="_blank" rel="noreferrer" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Connect</a>
+      </Card>
+
+      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+        <div className="flex items-center gap-6">
+          <GithubIcon className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
+          <div>
+            <h3 className="font-heading text-4xl uppercase">GitHub</h3>
+            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">CropCalm Repo</p>
+          </div>
+        </div>
+        <a href="https://github.com/EVERYDAY-ARADHY/CropCalm.git" target="_blank" rel="noreferrer" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">View Code</a>
+      </Card>
+        </CardSwap>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const AboutTab = () => {
   const { t } = useLanguage();
@@ -382,14 +513,26 @@ export default function Settings() {
   const { profile, setProfile } = useOutletContext() || { profile: null, setProfile: () => {} };
   const { t } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const TABS = [t('profile'), t('language'), t('importData'), t('statistics'), t('contactUs'), t('about')];
 
   return (
-    <div className="flex-1 flex p-8" style={{ minHeight: 0 }}>
+    <div className="flex-1 flex flex-col md:flex-row py-4 md:py-8 pl-4 md:pl-8 pr-0" style={{ minHeight: 0 }}>
+      {/* Mobile Header / Sidebar Toggle */}
+      <div className="md:hidden flex items-center justify-between pr-8 mb-2">
+        <h1 
+          className="font-heading text-3xl uppercase tracking-widest text-neo-cream cursor-pointer flex items-center gap-3 border border-neo-border-faint px-6 py-3 rounded-xl bg-neo-surface w-full justify-between"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {TABS[activeIndex]}
+          <span className="text-sm opacity-50">{isMobileMenuOpen ? '▲' : '▼'}</span>
+        </h1>
+      </div>
+
       {/* Sidebar Navigation */}
-      <div className="w-64 flex-shrink-0 pt-4">
-        <h1 className="font-heading text-3xl uppercase tracking-widest mb-12 text-neo-cream pl-6">{TABS[activeIndex]}</h1>
+      <div className={`w-full md:w-64 flex-shrink-0 pt-0 md:pt-4 ${isMobileMenuOpen ? 'block' : 'hidden md:block'}`}>
+        <h1 className="hidden md:block font-heading text-3xl uppercase tracking-widest mb-12 text-neo-cream pl-6">{TABS[activeIndex]}</h1>
         <LineSidebar
           items={TABS}
           accentColor="#F4E7D5"
@@ -398,13 +541,16 @@ export default function Settings() {
           showIndex={true}
           showMarker={true}
           defaultActive={activeIndex}
-          onItemClick={(idx) => setActiveIndex(idx)}
+          onItemClick={(idx) => {
+            setActiveIndex(idx);
+            setIsMobileMenuOpen(false);
+          }}
           className="pr-4"
         />
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto pl-16 pt-4 pb-12">
+      <div className={`flex-1 overflow-y-auto overflow-x-hidden no-scrollbar relative pl-2 pr-4 md:pl-16 md:pr-8 pt-4 pb-12 ${isMobileMenuOpen ? 'hidden md:block' : 'block'}`}>
         {activeIndex === 0 && <ProfileTab key={profile?.id || 'loading'} profile={profile} setProfile={setProfile} />}
         {activeIndex === 1 && <LanguageTab />}
         {activeIndex === 2 && <ImportDataTab />}

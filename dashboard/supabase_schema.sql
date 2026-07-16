@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   lng           FLOAT,
   animal_sightings TEXT[],
   threat_profile   JSONB DEFAULT '{}'::jsonb,
+  avatar_id        INT DEFAULT 1,
   onboarding_done  BOOLEAN DEFAULT FALSE,
   created_at    TIMESTAMPTZ DEFAULT NOW()
 );

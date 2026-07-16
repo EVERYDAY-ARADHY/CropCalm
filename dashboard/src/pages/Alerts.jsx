@@ -76,10 +76,10 @@ export default function Alerts() {
   const GLOW = '16, 185, 129'; // Emerald green glow
 
   return (
-    <div className="flex-1 flex flex-col p-6 h-full gap-6 max-h-screen overflow-hidden">
+    <div className="flex-1 flex flex-col p-4 md:p-6 h-full gap-4 md:gap-6 lg:max-h-screen lg:overflow-hidden overflow-y-auto no-scrollbar">
       
       {/* Main Layout 60/40 */}
-      <div className="flex-1 flex gap-6 min-h-0 pb-4">
+      <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0 pb-4">
         
         {/* Left Column - 60% */}
         <div className="flex-[6] flex flex-col gap-6 min-w-0">
