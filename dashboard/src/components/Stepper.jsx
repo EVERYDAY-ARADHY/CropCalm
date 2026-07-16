@@ -69,6 +69,21 @@ export default function Stepper({
     updateStep(totalSteps + 1);
   };
 
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Don't intercept Enter if they are typing in a text area or clicking a different button
+      if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'BUTTON') {
+        e.preventDefault();
+        const nextBtn = document.getElementById('stepper-next-btn');
+        if (nextBtn && !nextBtn.disabled) {
+          nextBtn.click();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="outer-container" {...rest}>
       <div className={`step-circle-container relative ${stepCircleContainerClassName}`}>
@@ -123,7 +138,7 @@ export default function Stepper({
         {!isCompleted && (
           <div className={`footer-container ${footerClassName}`}>
             <div className={`footer-nav ${currentStep !== 1 ? 'spread' : 'end'}`}>
-              <button onClick={isLastStep ? handleComplete : handleNext} className="next-button" {...nextButtonProps}>
+              <button id="stepper-next-btn" onClick={isLastStep ? handleComplete : handleNext} className="next-button" {...nextButtonProps}>
                 {isLastStep ? 'Complete' : nextButtonText}
               </button>
             </div>
