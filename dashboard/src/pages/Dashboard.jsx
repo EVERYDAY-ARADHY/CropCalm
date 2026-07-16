@@ -5,21 +5,9 @@ import NodePanel from '../components/NodePanel';
 import { DefaultRightPanel } from '../components/MagicBento';
 import { useLanguage } from '../context/LanguageContext';
 
-export const DEMO_DEVICES = [
-  { id: 'demo-hub', user_id: 'demo', name: 'Raspberry Pi Hub', type: 'hub',  status: 'online', position_angle: 0,   telemetry: [] },
-  { id: 'demo-n1',  user_id: 'demo', name: 'North',       type: 'node', status: 'online', position_angle: 0,   telemetry: [{ ultrasonic_cm: 450, pir_triggered: false, microwave_triggered: false, threat_level: 0, recorded_at: new Date().toISOString() }] },
-  { id: 'demo-n2',  user_id: 'demo', name: 'North East',  type: 'node', status: 'alert',  position_angle: 72,  telemetry: [{ ultrasonic_cm: 180, pir_triggered: true,  microwave_triggered: false, threat_level: 2, recorded_at: new Date().toISOString() }] },
-  {
-    id: 'demo-n3', user_id: 'demo', name: 'South East', type: 'node', status: 'alert', position_angle: 144,
-    alerts: [
-      { sensor: 'PIR Motion',      detail: 'Motion detected at perimeter', time: '22:58:34' },
-      { sensor: 'Microwave Radar', detail: 'Large moving object confirmed', time: '22:58:36' },
-    ],
-    telemetry: [{ ultrasonic_cm: 60, pir_triggered: true, microwave_triggered: true, threat_level: 3, recorded_at: new Date().toISOString() }],
-  },
-  { id: 'demo-n4',  user_id: 'demo', name: 'South West',  type: 'node', status: 'alert',  position_angle: 216, telemetry: [{ ultrasonic_cm: 200, pir_triggered: true,  microwave_triggered: false, threat_level: 2, recorded_at: new Date().toISOString() }] },
-  { id: 'demo-n5',  user_id: 'demo', name: 'North West',  type: 'node', status: 'online', position_angle: 288, telemetry: [{ ultrasonic_cm: 390, pir_triggered: false, microwave_triggered: false, threat_level: 0, recorded_at: new Date().toISOString() }] },
-];
+import { generateMockDevices } from '../lib/mockDeviceData';
+
+export const DEMO_DEVICES = generateMockDevices(15);
 
 export default function Dashboard() {
   const { t } = useLanguage();

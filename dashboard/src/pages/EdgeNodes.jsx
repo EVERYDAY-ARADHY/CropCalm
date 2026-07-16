@@ -90,7 +90,8 @@ export default function EdgeNodes() {
                 <div>
                   <div className="flex justify-between items-start mb-6">
                     <div className="flex-1 pr-4">
-                      <div className="h-24 flex items-end">
+                      <div className="h-24 flex flex-col justify-end">
+                        <span className="font-heading text-xl opacity-30 mb-1">{i + 1} / {nodes.length}</span>
                         <h2 className="font-heading text-5xl uppercase leading-[0.9]" style={{ color, textShadow: `0 0 20px ${color}55` }}>
                           {node.name}
                         </h2>
@@ -131,13 +132,20 @@ export default function EdgeNodes() {
                         {(telemetry.pir_triggered || threat === 3) ? t('detected') : t('clear')}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-2">
                       <span className="font-subheading text-[10px] uppercase text-neo-cream/60">{t('microwaveRadar')}</span>
                       <span className="font-subheading text-[10px] uppercase px-2 py-0.5 rounded-sm"
                         style={{ backgroundColor: (telemetry.microwave_triggered || threat === 3) ? '#ef444433' : '#157A2633', color: (telemetry.microwave_triggered || threat === 3) ? '#ef4444' : '#157A26' }}>
                         {(telemetry.microwave_triggered || threat === 3) ? t('detected') : t('clear')}
                       </span>
                     </div>
+                    {telemetry.suspected_animal && (
+                      <div className="mt-3 pt-3 border-t border-neo-border-faint">
+                        <p className="font-subheading text-[9px] uppercase tracking-widest text-neo-cream/40 mb-1">AI Assessment</p>
+                        <p className="font-subheading font-bold text-xs uppercase" style={{ color: color }}>{telemetry.suspected_animal}</p>
+                        <p className="font-subheading text-[10px] text-neo-cream/60 mt-1">{telemetry.animal_desc}</p>
+                      </div>
+                    )}
                   </div>
                 )}
               </ParticleCard>
