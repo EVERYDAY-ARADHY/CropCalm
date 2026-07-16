@@ -50,10 +50,9 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
           const ny = r / rows;
           const pos = nx + ny; 
           
-          // Map pos (0 to 1) to threshold (0 to 5) so it stops exactly at the diagonal (pos=1)
-          // Anything beyond pos=1 will have threshold > 5 and never turn on.
-          const noise = (Math.sin(c * 0.5) + Math.cos(r * 0.5)) * 0.15;
-          const threshold = pos * 5 + noise * 5;
+          // Exactly 5 equal diagonal slices across the entire screen
+          // The spread will sweep deterministically, turning pixels on bit by bit
+          const threshold = (pos / 2.0) * 5;
 
           cells.set(key, {
             c, r,
