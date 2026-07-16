@@ -58,7 +58,7 @@ const Layout = () => {
     { code: 'ta', label: 'தமி' },
   ];
 
-  const isDashboard = location.pathname === '/';
+  const isDashboard = location.pathname === '/' || location.pathname === '/alerts';
 
   return (
     <div className={`${isDashboard ? 'h-[100dvh] overflow-hidden' : 'min-h-screen'} flex flex-col font-body text-neo-cream relative z-10`}>
