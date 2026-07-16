@@ -58,7 +58,7 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
             c, r,
             threshold,
             currentOpacity: 0,
-            delayOffset: Math.random() * Math.PI * 2, 
+            delayOffset: (c + r) * 0.15, // Creates a smooth diagonal wave instead of random twinkling
           });
         }
       }
