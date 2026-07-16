@@ -111,7 +111,6 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
   }, [text, image, repetitions, speed]);
 
   const handleMouseEnter = ev => {
-    if (window.matchMedia("(hover: none)").matches) return;
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
     const x = ev.clientX - rect.left;
@@ -126,7 +125,6 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
   };
 
   const handleMouseLeave = ev => {
-    if (window.matchMedia("(hover: none)").matches) return;
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
     const x = ev.clientX - rect.left;
@@ -139,6 +137,26 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
       .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0);
   };
 
+  // On touch: show marquee briefly then hide it
+  const handleTouchStart = () => {
+    if (!marqueeRef.current || !marqueeInnerRef.current) return;
+    gsap
+      .timeline({ defaults: animationDefaults })
+      .set(marqueeRef.current, { y: '101%' }, 0)
+      .set(marqueeInnerRef.current, { y: '-101%' }, 0)
+      .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
+  };
+
+  const handleTouchEnd = () => {
+    if (!marqueeRef.current || !marqueeInnerRef.current) return;
+    setTimeout(() => {
+      gsap
+        .timeline({ defaults: animationDefaults })
+        .to(marqueeRef.current, { y: '101%' }, 0)
+        .to(marqueeInnerRef.current, { y: '-101%' }, 0);
+    }, 400);
+  };
+
   return (
     <div className="menu__item" ref={itemRef} style={{ borderColor }}>
       <button
@@ -146,6 +164,8 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
         onClick={onClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         style={{ color: textColor }}
       >
         {text}
