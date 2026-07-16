@@ -147,7 +147,7 @@ const Layout = () => {
       </nav>
 
       {/* ── Main Content ───────────────────────────────────────────────── */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 flex flex-col min-h-0 overflow-y-auto">
         <Outlet context={{ profile, setProfile }} />
       </main>
 
