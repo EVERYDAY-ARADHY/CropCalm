@@ -120,9 +120,14 @@ export default function Login() {
                 </div>
               </div>
             </form>
-            <div className="mt-8 text-center px-4">
-              <button type="button" onClick={() => { setIsSignUp(!isSignUp); setError(null); setStepperKey(k => k+1); }} className="font-subheading text-[10px] uppercase tracking-widest text-neo-cream/60 hover:text-neo-cream transition-colors leading-relaxed">
-                {isSignUp ? 'ALREADY HAVE AN ACCOUNT? LOG IN' : 'NEW USERNAME? A NEW ACCOUNT WILL BE CREATED AUTOMATICALLY (CLICK TO SIGN UP)'}
+            <div className="mt-6 flex flex-col items-center gap-6 px-4">
+              <div className="w-full h-[2px] bg-neo-cream/10 rounded-full"></div>
+              <button 
+                type="button" 
+                onClick={() => { setIsSignUp(!isSignUp); setError(null); setStepperKey(k => k+1); }} 
+                className="font-subheading text-xs uppercase tracking-widest text-neo-cream hover:text-white transition-all py-3 px-6 border-2 border-neo-green/50 hover:border-neo-green rounded-xl bg-neo-green/10 hover:bg-neo-green/20 shadow-sm"
+              >
+                {isSignUp ? 'Already have an account? Log In' : 'Need an account? Sign Up'}
               </button>
             </div>
           </Step>
