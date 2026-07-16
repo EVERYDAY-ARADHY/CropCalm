@@ -37,26 +37,33 @@ const HeatmapLayer = ({ nodes }) => {
   useEffect(() => {
     if (!nodes || nodes.length === 0) return;
     
-    // Map nodes to [lat, lng, intensity]
-    const points = nodes.map(n => [n.lat, n.lng, n.alerts]);
-    
-    const heatLayer = L.heatLayer(points, {
-      radius: 60, // Large radius to cover the "overall place"
-      blur: 40,
-      maxZoom: 18,
-      max: 100, // Maximum alerts for intensity
-      gradient: {
-        0.2: '#000080', // Deep Blue
-        0.4: '#00FFFF', // Cyan
-        0.6: '#00FF00', // Green
-        0.8: '#FFFF00', // Yellow
-        1.0: '#FF0000', // Red
+    try {
+      if (typeof L.heatLayer !== 'function') {
+        console.warn("Leaflet.heat plugin is missing or didn't load correctly.");
+        return;
       }
-    }).addTo(map);
+      
+      const points = nodes.map(n => [n.lat, n.lng, n.alerts]);
+      const heatLayer = L.heatLayer(points, {
+        radius: 60,
+        blur: 40,
+        maxZoom: 18,
+        max: 100,
+        gradient: {
+          0.2: '#000080',
+          0.4: '#00FFFF',
+          0.6: '#00FF00',
+          0.8: '#FFFF00',
+          1.0: '#FF0000',
+        }
+      }).addTo(map);
 
-    return () => {
-      map.removeLayer(heatLayer);
-    };
+      return () => {
+        map.removeLayer(heatLayer);
+      };
+    } catch (err) {
+      console.error("HeatmapLayer failed:", err);
+    }
   }, [map, nodes]);
   return null;
 };

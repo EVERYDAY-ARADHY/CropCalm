@@ -111,6 +111,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
   }, [text, image, repetitions, speed]);
 
   const handleMouseEnter = ev => {
+    if (window.matchMedia("(hover: none)").matches) return;
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
     const x = ev.clientX - rect.left;
@@ -125,6 +126,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
   };
 
   const handleMouseLeave = ev => {
+    if (window.matchMedia("(hover: none)").matches) return;
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
     const x = ev.clientX - rect.left;
