@@ -360,7 +360,7 @@ export default function Onboarding() {
               <ScrollStack
                 className="h-full w-full rounded-xl"
                 itemDistance={16}
-                itemScale={0.04}
+                itemScale={0.01}
                 itemStackDistance={20}
                 stackPosition="0%"
                 scaleEndPosition="5%"
@@ -368,7 +368,7 @@ export default function Onboarding() {
                 useWindowScroll={false}
               >
                 {threatProfile.threats.map((t) => (
-                    <ScrollStackItem key={t.animal} itemClassName="w-full">
+                    <ScrollStackItem key={t.animal} itemClassName="w-full px-2 pb-2">
                       <div className="border border-neo-cream/30 bg-[#121212] rounded-xl p-3 flex gap-3 items-start shadow-[4px_4px_0px_rgba(244,231,213,0.15)] w-full">
                         <span className={`font-subheading font-bold text-[10px] uppercase tracking-widest mt-0.5 whitespace-nowrap ${threatColors[t.level]}`}>
                           {t.level}
