@@ -359,7 +359,7 @@ export default function Onboarding() {
             <div className="w-full pb-4 h-[300px]">
               <ScrollStack
                 className="h-full w-full rounded-xl"
-                itemDistance={100}
+                itemDistance={16}
                 itemScale={0.04}
                 itemStackDistance={20}
                 stackPosition="0%"
