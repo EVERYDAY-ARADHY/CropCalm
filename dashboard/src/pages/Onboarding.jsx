@@ -5,6 +5,7 @@ import { provisionDevices, buildThreatProfile } from '../lib/deviceSetup';
 import Stepper, { Step } from '../components/Stepper';
 import AvatarPicker from '../components/AvatarPicker';
 import OnboardingBackground from '../components/OnboardingBackground';
+import ScrollStack, { ScrollStackItem } from '../components/ScrollStack';
 
 const ANIMALS = [
   'Wild Boar', 'Nilgai', 'Monkey', 'Elephant', 'Leopard', 'Deer',
@@ -355,20 +356,33 @@ export default function Onboarding() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 w-full pb-4">
+            <div className="w-full pb-4 h-[300px]">
+              <ScrollStack
+                className="h-full w-full rounded-xl"
+                itemDistance={100}
+                itemScale={0.04}
+                itemStackDistance={20}
+                stackPosition="0%"
+                scaleEndPosition="5%"
+                baseScale={0.9}
+                useWindowScroll={false}
+              >
                 {threatProfile.threats.map((t) => (
-                    <div key={t.animal} className="border border-neo-cream/30 bg-[#121212] rounded-xl p-3 flex gap-3 items-start shadow-md w-full">
-                      <span className={`font-subheading font-bold text-[10px] uppercase tracking-widest mt-0.5 whitespace-nowrap ${threatColors[t.level]}`}>
-                        {t.level}
-                      </span>
-                      <div>
-                        <p className="font-subheading font-bold text-sm">
-                          {t.animal} <span className="text-neo-cream/40 font-normal">· {t.time}</span>
-                        </p>
-                        <p className="text-xs text-neo-cream/60 mt-0.5">{t.notes}</p>
+                    <ScrollStackItem key={t.animal} itemClassName="w-full">
+                      <div className="border border-neo-cream/30 bg-[#121212] rounded-xl p-3 flex gap-3 items-start shadow-[4px_4px_0px_rgba(244,231,213,0.15)] w-full">
+                        <span className={`font-subheading font-bold text-[10px] uppercase tracking-widest mt-0.5 whitespace-nowrap ${threatColors[t.level]}`}>
+                          {t.level}
+                        </span>
+                        <div>
+                          <p className="font-subheading font-bold text-sm">
+                            {t.animal} <span className="text-neo-cream/40 font-normal">· {t.time}</span>
+                          </p>
+                          <p className="text-xs text-neo-cream/60 mt-0.5">{t.notes}</p>
+                        </div>
                       </div>
-                    </div>
+                    </ScrollStackItem>
                 ))}
+              </ScrollStack>
             </div>
             </div>
           </Step>
