@@ -8,22 +8,51 @@ const RingBackground = () => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
-    let width, height, maxRadius;
+    let width, height;
     
+    let gridSize = 40; 
+    let cols, rows;
+    let offsetX = 0, offsetY = 0;
+    
+    const cells = new Map();
     let time = 0;
-    
-    // Configuration
-    const numRings = 7; // Number of rings visible at once
-    const speed = 0.8; // Speed of expansion
-    
+
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
       
-      // Calculate max radius needed to cover the corners
-      maxRadius = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2)) + 100;
+      if (width < 768) gridSize = 30;
+      else gridSize = 40;
+
+      cols = Math.ceil(width / gridSize);
+      rows = Math.ceil(height / gridSize);
+      
+      offsetX = (width - (cols * gridSize)) / 2;
+      offsetY = (height - (rows * gridSize)) / 2;
+      
+      cells.clear();
+      for (let c = 0; c < cols; c++) {
+        for (let r = 0; r < rows; r++) {
+          const key = `${c},${r}`;
+          // Calculate distance from center for ring effect
+          const nx = c / cols;
+          const ny = r / rows;
+          
+          // Adjust for aspect ratio so rings are circular, not elliptical
+          const aspect = width / height;
+          const dx = (nx - 0.5) * aspect;
+          const dy = ny - 0.5;
+          const dist = Math.sqrt(dx * dx + dy * dy); 
+
+          cells.set(key, {
+            c, r,
+            dist,
+            currentOpacity: 0
+          });
+        }
+      }
     };
 
     window.addEventListener('resize', resize);
@@ -32,33 +61,27 @@ const RingBackground = () => {
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
       
-      time += speed;
-      
-      const centerX = width / 2;
-      const centerY = height / 2;
+      const rColor = 21, gColor = 122, bColor = 38;
+      time += 0.04;
 
-      for (let i = 0; i < numRings; i++) {
-        // Calculate radius using modulo arithmetic to make it continuous
-        let radius = (time + i * (maxRadius / numRings)) % maxRadius;
+      for (const [key, cell] of cells.entries()) {
+        const { c, r, dist } = cell;
         
-        // Fading effect: fading out towards the edges
-        let opacity = 1 - (radius / maxRadius);
+        // Outward expanding ripple math
+        // Multiply dist to get more rings, multiply time for speed
+        const wave = Math.sin(dist * 25 - time * 1.5);
         
-        // Make the fade-out slightly smoother (exponential)
-        opacity = Math.pow(opacity, 1.2);
+        // Only show the positive peaks of the sine wave to make distinct rings
+        // Scale it down so it's subtle (max opacity 0.3)
+        let targetOpacity = wave > 0 ? wave * 0.3 : 0;
+
+        // Smoothly transition opacity to prevent harsh flickering on fast moving pixels
+        cell.currentOpacity += (targetOpacity - cell.currentOpacity) * 0.2;
         
-        // Base color: CropCalm Green #157A26
-        const rColor = 21, gColor = 122, bColor = 38;
-        
-        // The max opacity should be quite low so it's a subtle background
-        const maxOp = 0.25; 
-        
-        if (opacity > 0 && radius > 0) {
-          ctx.beginPath();
-          ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-          ctx.strokeStyle = `rgba(${rColor}, ${gColor}, ${bColor}, ${opacity * maxOp})`;
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
+        if (cell.currentOpacity > 0.005) {
+          ctx.fillStyle = `rgba(${rColor}, ${gColor}, ${bColor}, ${cell.currentOpacity})`;
+          // Draw pixel exactly at grid size to keep it seamless like Onboarding
+          ctx.fillRect(offsetX + c * gridSize, offsetY + r * gridSize, gridSize, gridSize);
         }
       }
       
