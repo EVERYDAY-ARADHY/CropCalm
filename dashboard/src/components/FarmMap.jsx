@@ -87,6 +87,7 @@ const FarmMap = () => {
         zoom={17} // Zoomed in much closer for 60m radius
         style={{ height: '100%', width: '100%', zIndex: 0 }}
         zoomControl={false}
+        attributionControl={false}
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
