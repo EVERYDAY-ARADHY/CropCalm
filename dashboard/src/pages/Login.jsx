@@ -85,7 +85,9 @@ export default function Login() {
           <Step>
             <div className="flex flex-col items-center mb-8 mt-4">
               <Target className="w-8 h-8 text-neo-green-dark mb-4" strokeWidth={2.5} />
-              <h1 className="font-heading text-4xl md:text-5xl uppercase tracking-widest text-center mb-2" style={{ color: 'var(--color-neo-cream)' }}>SECURE LOGIN</h1>
+              <h1 className="font-heading text-4xl md:text-5xl uppercase tracking-widest text-center mb-2" style={{ color: 'var(--color-neo-cream)' }}>
+                {isSignUp ? "SIGN UP" : "LOGIN"}
+              </h1>
               <p className="font-subheading text-[10px] uppercase tracking-widest text-neo-cream/50 text-center">
                 CROPCALM - ANIMAL DETERRENT SYSTEM
               </p>
