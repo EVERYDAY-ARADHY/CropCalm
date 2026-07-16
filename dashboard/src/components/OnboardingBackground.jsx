@@ -20,6 +20,7 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
     
     let gridSize = 40; 
     let cols, rows;
+    let offsetX = 0, offsetY = 0;
     
     const cells = new Map();
     let time = 0;
@@ -35,6 +36,9 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
 
       cols = Math.ceil(width / gridSize);
       rows = Math.ceil(height / gridSize);
+      
+      offsetX = (width - (cols * gridSize)) / 2;
+      offsetY = (height - (rows * gridSize)) / 2;
       
       cells.clear();
       for (let c = 0; c < cols; c++) {
@@ -74,11 +78,10 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
         
         if (isSavingRef.current) {
           const wave = (Math.sin(c * 0.15 + time) + Math.cos(r * 0.15 + time) + 2) / 4; 
-          targetOpacity = wave * 0.25; 
+          targetOpacity = wave * 0.7; // Much brighter loading wave
         } else {
-          // If step 1 -> fill slice 0. step 5 -> fill slice 0,1,2,3,4.
           if (stepRef.current - 1 >= sliceIndex) {
-            targetOpacity = 0.03 + Math.abs(Math.sin(time * 0.5 + delayOffset)) * 0.12;
+            targetOpacity = 0.1 + Math.abs(Math.sin(time * 0.5 + delayOffset)) * 0.45; // Max opacity ~0.55
           } else {
             targetOpacity = 0;
           }
@@ -88,9 +91,7 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
         
         if (cell.currentOpacity > 0.005) {
           ctx.fillStyle = `rgba(${rColor}, ${gColor}, ${bColor}, ${cell.currentOpacity})`;
-          // Draw pixel but slightly smaller than grid size to give that "pixel" look
-          // Or just fill completely
-          ctx.fillRect(c * gridSize, r * gridSize, gridSize - 1, gridSize - 1);
+          ctx.fillRect(offsetX + c * gridSize, offsetY + r * gridSize, gridSize - 1, gridSize - 1);
         }
       }
       
