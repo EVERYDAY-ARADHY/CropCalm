@@ -428,60 +428,60 @@ const ContactTab = () => {
           delay={0}
           pauseOnHover={false}
         >
-      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
-        <div className="flex items-center gap-6">
-          <Phone className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
-          <div>
-            <h3 className="font-heading text-4xl uppercase">24/7 Helpline</h3>
-            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">+91 8588819662</p>
-          </div>
-        </div>
-        <a href="tel:+918588819662" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Call Now</a>
-      </Card>
-      
-      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
-        <div className="flex items-center gap-6">
-          <InstagramIcon className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
-          <div>
-            <h3 className="font-heading text-4xl uppercase">Instagram</h3>
-            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">@tired_kurkure</p>
-          </div>
-        </div>
-        <a href="https://instagram.com/tired_kurkure" target="_blank" rel="noreferrer" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Follow</a>
-      </Card>
+          <Card customClass="p-6 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+            <div className="flex items-center gap-4 md:gap-6">
+              <Phone className="w-8 h-8 md:w-12 md:h-12 flex-shrink-0 text-neo-cream/60" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <h3 className="font-heading text-2xl md:text-4xl uppercase truncate">24/7 Helpline</h3>
+                <p className="font-subheading text-[10px] md:text-lg uppercase tracking-widest text-neo-cream/50 mt-1 md:mt-2 truncate">+91 8588819662</p>
+              </div>
+            </div>
+            <a href="tel:+918588819662" className="w-full md:w-auto mt-2 md:mt-0 text-center px-4 py-2 md:px-8 md:py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-[10px] md:text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Call Now</a>
+          </Card>
+          
+          <Card customClass="p-6 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+            <div className="flex items-center gap-4 md:gap-6">
+              <InstagramIcon className="w-8 h-8 md:w-12 md:h-12 flex-shrink-0 text-neo-cream/60" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <h3 className="font-heading text-2xl md:text-4xl uppercase truncate">Instagram</h3>
+                <p className="font-subheading text-[10px] md:text-lg uppercase tracking-widest text-neo-cream/50 mt-1 md:mt-2 truncate">@tired_kurkure</p>
+              </div>
+            </div>
+            <a href="https://instagram.com/tired_kurkure" target="_blank" rel="noreferrer" className="w-full md:w-auto mt-2 md:mt-0 text-center px-4 py-2 md:px-8 md:py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-[10px] md:text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Follow</a>
+          </Card>
 
-      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
-        <div className="flex items-center gap-6">
-          <Mail className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
-          <div>
-            <h3 className="font-heading text-4xl uppercase">Email Support</h3>
-            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">krishnaxaradhy@gmail.com</p>
-          </div>
-        </div>
-        <a href="mailto:krishnaxaradhy@gmail.com" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Send Email</a>
-      </Card>
+          <Card customClass="p-6 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+            <div className="flex items-center gap-4 md:gap-6">
+              <Mail className="w-8 h-8 md:w-12 md:h-12 flex-shrink-0 text-neo-cream/60" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <h3 className="font-heading text-2xl md:text-4xl uppercase truncate">Email Support</h3>
+                <p className="font-subheading text-[10px] md:text-lg uppercase tracking-widest text-neo-cream/50 mt-1 md:mt-2 truncate">krishnaxaradhy@gmail.com</p>
+              </div>
+            </div>
+            <a href="mailto:krishnaxaradhy@gmail.com" className="w-full md:w-auto mt-2 md:mt-0 text-center px-4 py-2 md:px-8 md:py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-[10px] md:text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Send Email</a>
+          </Card>
 
-      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
-        <div className="flex items-center gap-6">
-          <LinkedinIcon className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
-          <div>
-            <h3 className="font-heading text-4xl uppercase">LinkedIn</h3>
-            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">Aradhy Shukla</p>
-          </div>
-        </div>
-        <a href="https://www.linkedin.com/in/aradhy-shukla-81b7b9374" target="_blank" rel="noreferrer" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Connect</a>
-      </Card>
+          <Card customClass="p-6 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+            <div className="flex items-center gap-4 md:gap-6">
+              <LinkedinIcon className="w-8 h-8 md:w-12 md:h-12 flex-shrink-0 text-neo-cream/60" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <h3 className="font-heading text-2xl md:text-4xl uppercase truncate">LinkedIn</h3>
+                <p className="font-subheading text-[10px] md:text-lg uppercase tracking-widest text-neo-cream/50 mt-1 md:mt-2 truncate">Aradhy Shukla</p>
+              </div>
+            </div>
+            <a href="https://www.linkedin.com/in/aradhy-shukla-81b7b9374" target="_blank" rel="noreferrer" className="w-full md:w-auto mt-2 md:mt-0 text-center px-4 py-2 md:px-8 md:py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-[10px] md:text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">Connect</a>
+          </Card>
 
-      <Card customClass="px-12 flex items-center justify-between group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
-        <div className="flex items-center gap-6">
-          <GithubIcon className="w-12 h-12 text-neo-cream/60" strokeWidth={1.5} />
-          <div>
-            <h3 className="font-heading text-4xl uppercase">GitHub</h3>
-            <p className="font-subheading text-lg uppercase tracking-widest text-neo-cream/50 mt-2">CropCalm Repo</p>
-          </div>
-        </div>
-        <a href="https://github.com/EVERYDAY-ARADHY/CropCalm.git" target="_blank" rel="noreferrer" className="px-8 py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">View Code</a>
-      </Card>
+          <Card customClass="p-6 md:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 group hover:border-neo-cream/40 transition-colors cursor-pointer pointer-events-auto">
+            <div className="flex items-center gap-4 md:gap-6">
+              <GithubIcon className="w-8 h-8 md:w-12 md:h-12 flex-shrink-0 text-neo-cream/60" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <h3 className="font-heading text-2xl md:text-4xl uppercase truncate">GitHub</h3>
+                <p className="font-subheading text-[10px] md:text-lg uppercase tracking-widest text-neo-cream/50 mt-1 md:mt-2 truncate">CropCalm Repo</p>
+              </div>
+            </div>
+            <a href="https://github.com/EVERYDAY-ARADHY/CropCalm.git" target="_blank" rel="noreferrer" className="w-full md:w-auto mt-2 md:mt-0 text-center px-4 py-2 md:px-8 md:py-4 border-2 border-neo-cream text-neo-cream rounded-full font-subheading text-[10px] md:text-lg uppercase tracking-widest hover:bg-neo-cream hover:text-neo-dark transition-colors z-10 relative pointer-events-auto">View Code</a>
+          </Card>
         </CardSwap>
       </div>
     </div>
