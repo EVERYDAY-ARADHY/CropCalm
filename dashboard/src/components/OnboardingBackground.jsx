@@ -50,10 +50,10 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
           const ny = r / rows;
           const pos = nx + ny; 
           
-          // Create an organic threshold for this cell
-          // base goes up to 4.5. noise is between -0.5 and 0.5. Max threshold is 5.0.
-          const noise = (Math.sin(c * 0.5) + Math.cos(r * 0.5)) * 0.5;
-          const threshold = pos * 2.25 + noise;
+          // Map pos (0 to 1) to threshold (0 to 5) so it stops exactly at the diagonal (pos=1)
+          // Anything beyond pos=1 will have threshold > 5 and never turn on.
+          const noise = (Math.sin(c * 0.5) + Math.cos(r * 0.5)) * 0.15;
+          const threshold = pos * 5 + noise * 5;
 
           cells.set(key, {
             c, r,
@@ -98,7 +98,8 @@ const OnboardingBackground = ({ step = 1, isSaving = false }) => {
         
         if (cell.currentOpacity > 0.005) {
           ctx.fillStyle = `rgba(${rColor}, ${gColor}, ${bColor}, ${cell.currentOpacity})`;
-          ctx.fillRect(offsetX + c * gridSize, offsetY + r * gridSize, gridSize - 1, gridSize - 1);
+          // Draw pixel exactly at grid size to remove any grid gaps
+          ctx.fillRect(offsetX + c * gridSize, offsetY + r * gridSize, gridSize, gridSize);
         }
       }
       
